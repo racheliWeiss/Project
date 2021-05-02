@@ -17,16 +17,17 @@ namespace Project.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
-            var user = UserRepository.Get(model.Username, model.Password);
+            int permission =Manager.Manager.Login(model);
 
-            if (user == null)
+            if (permission == 0)
+
                 return NotFound(new { message = "User or password invalid" });
-
-            var token = TokenService.CreateToken(user);
-            user.Password = "";
+            
+            var token = TokenService.CreateToken(model);
+            model.Password = "";
             return new
             {
-                user = user,
+                user = model,
                 token = token
             };
         }
