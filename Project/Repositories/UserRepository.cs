@@ -1,5 +1,6 @@
 ﻿using Microsoft.SqlServer.Management.Smo;
 using Nancy.Json;
+using Newtonsoft.Json;
 using Project.Models;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,11 @@ namespace Project.Repositories
         {
 
             SqlConnection conn = null;
-           /* string jsonUser = new JavaScriptSerializer().Serialize(model);‏*/
+
+            string jsonUser = new JavaScriptSerializer().Serialize(model);
+
+
+            //string jsonUser = JsonConvert.SerializeObject(testUser);‏
 
             try
             {
@@ -60,8 +65,6 @@ namespace Project.Repositories
                         cmd.CommandText = "usp_login";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@login",model));
-                        /*cmd.Parameters.Add(new SqlParameter(@Password, password));
-                        cmd.Parameters.Add(new SqlParameter(@PersonId, personId));*/
                         retunRole=(int)cmd.ExecuteScalar();
                     }
                 }

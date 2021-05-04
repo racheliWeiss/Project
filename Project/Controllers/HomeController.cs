@@ -19,12 +19,12 @@ namespace Project.Controllers
         {
             int permission =Manager.Manager.Login(model);
 
-            if (permission == 0)
+            if (permission == 2)
 
                 return NotFound(new { message = "User or password invalid" });
             
             var token = TokenService.CreateToken(model);
-            model.Password = "";
+            model.login_password = "";
             return new
             {
                 user = model,

@@ -8,17 +8,19 @@ namespace Project.Models
     public class User
     {
 
-        public int Login_ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string login_entity_number { get; set; }
+        public string login_ID { get; set; }
+        public string login_password { get; set; }
 
-        public string Login_entity_number { get; set; }
+        public string login_finger_print { get; set; }
 
-        
-        public User(string Username,string Password)
+        public User()
+        { }
+         public User(string Username,string Password)
         {
-            this.Password = Password;
-            this.Username = Username;
+            this.login_password = Password;
+            this.login_ID = Username;
         }
+
     }
 }
