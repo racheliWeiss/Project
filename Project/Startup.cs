@@ -19,6 +19,7 @@ namespace Project
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,9 +30,19 @@ namespace Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000",
+                                                          "http://www.contoso.com").AllowAnyHeader()
+                                                  .AllowAnyMethod(); 
+                                  });
+            });
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+           
+         services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project", Version = "v1" });
             });
@@ -71,8 +82,8 @@ namespace Project
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
            app.UseAuthentication();
 
            app.UseAuthorization();

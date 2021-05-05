@@ -22,5 +22,6 @@ namespace Project
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        
     }
 }
