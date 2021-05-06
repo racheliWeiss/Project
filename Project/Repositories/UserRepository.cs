@@ -41,7 +41,8 @@ namespace Project.Repositories
         {
             connection = @"server= Data Source = 82.166.177.109; Encrypt = False; Initial Catalog = MSB; Integrated Security = False; User ID = cpiLogin";
         }
-
+        //check if the user existing  in server
+ 
         public int Login(Models.User model)
         {
 

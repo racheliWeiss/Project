@@ -13,6 +13,7 @@ namespace Project.Services
     public class TokenService
     {
         private const double EXPIRE_HOURS = 1.0;
+        //The function create token to user  and return token
         public static string CreateToken(User user)
         {
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
