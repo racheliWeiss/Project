@@ -31,7 +31,11 @@ namespace Project.Repositories
 
         private Repository()
         {
-            connection = @"server= Data Source = 82.166.177.109; Encrypt = False; Initial Catalog = MSB; Integrated Security = False; User ID = cpiLogin";
+            connection = @"server= Data Source=82.166.177.109;User Id=cpiLogin;Password=!qazXsw2";
+
+
+
+
         }
 
         

@@ -13,7 +13,7 @@ namespace Project.Repositories
 {
     public class UserRepository
     {
-        private int retunRole;
+       
 
         private static UserRepository instance = new UserRepository();
         private static readonly object mutex = new object();
@@ -39,12 +39,12 @@ namespace Project.Repositories
 
         private UserRepository()
         {
-            connection = @"server= Data Source = 82.166.177.109; Encrypt = False; Initial Catalog = MSB; Integrated Security = False; User ID = cpiLogin";
+            connection = @"server= Data Source=82.166.177.109;User Id=cpiLogin;Password=!qazXsw2";
         }
 
         public int Login(Models.User model)
         {
-
+            int retunRole = -1;
             SqlConnection conn = null;
 
             string jsonUser = new JavaScriptSerializer().Serialize(model);
@@ -54,7 +54,7 @@ namespace Project.Repositories
 
             try
             {
-                using (conn = new SqlConnection())
+                using (conn = new SqlConnection(connection))
                 {
                     using (SqlCommand cmd = new SqlCommand())
                     {

@@ -35,8 +35,8 @@ namespace Project
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:3000",
-                                                          "http://www.contoso.com").AllowAnyHeader()
+                                      builder.WithOrigins("http://localhost:3000", "http://localhost:3001",
+                                                          "http://82.166.177.79").AllowAnyHeader()
                                                   .AllowAnyMethod(); 
                                   });
             });
