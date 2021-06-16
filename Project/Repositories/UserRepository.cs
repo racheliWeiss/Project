@@ -47,7 +47,7 @@ namespace Project.Repositories
             int retunRole = -1;
             SqlConnection conn = null;
 
-            string jsonUser = new JavaScriptSerializer().Serialize(model);
+            string jsonUser = JsonConvert.SerializeObject(model);
 
 
             //string jsonUser = JsonConvert.SerializeObject(testUser);‏

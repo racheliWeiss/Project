@@ -22,7 +22,7 @@ namespace Project.Controllers
             if (permission == 2)
                 return NotFound(new { message = "User or password invalid" });
 
-            if (permission == 0) { 
+            if (permission == -1) { 
           
                var token = TokenService.CreateToken(model);
                model.login_password = "";
