@@ -41,7 +41,8 @@ namespace Project.Repositories
         {
             connection = @"server= Data Source=82.166.177.109;User Id=cpiLogin;Password=!qazXsw2";
         }
-
+        //check if the user existing  in server
+ 
         public int Login(Models.User model)
         {
             int retunRole = -1;

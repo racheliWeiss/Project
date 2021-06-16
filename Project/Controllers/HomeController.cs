@@ -10,11 +10,15 @@ using System.Threading.Tasks;
 
 namespace Project.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HomeController : Controller
     {
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
+         //The function Login to server with jwt 
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
             int permission =Manager.Manager.Login(model);
