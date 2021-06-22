@@ -5,6 +5,7 @@ C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Project.deps.json
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Project.runtimeconfig.json
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Project.pdb
+C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Json.Net.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Microsoft.Data.SqlClient.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Microsoft.DotNet.PlatformAbstractions.dll
@@ -47,6 +48,7 @@ C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Microsoft.SqlServer.WmiEnum.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Nancy.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\RestSharp.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

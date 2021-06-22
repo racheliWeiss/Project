@@ -97,3 +97,5 @@ C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\Project.dl
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\ref\Project.dll
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\Project.pdb
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Release\net5.0\Project.genruntimeconfig.cache
+C:\Users\USER\Desktop\Work\Project\Project\Project\bin\Release\net5.0\Json.Net.dll
+C:\Users\USER\Desktop\Work\Project\Project\Project\bin\Release\net5.0\RestSharp.dll

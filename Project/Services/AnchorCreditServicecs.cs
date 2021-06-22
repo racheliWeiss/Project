@@ -173,6 +173,34 @@ namespace Project.Services
 
         //חישוב עלות נוספת בהתאם לתקנות עד 10 יום
         //Calculate additional cost In accordance with regulations  
+
+        public double Caculate()
+        {
+            if(NumberOfCreditDays>365&&NominalValue >= 100000)
+            {
+                return 0;
+            }
+            if (NominalValue < 10000)
+            {
+                double val = Math.Min(100, 0.15 * NominalValue);
+                val = Math.Max(val, 30);
+                return val;
+            }
+            if(NominalValue>10000&& NominalValue < 100000)
+            {
+                if (NumberOfCreditDays <= 10)
+                {
+                    return Math.Max(30, 0.1 * NominalValue);
+                }
+                if (NumberOfCreditDays > 10)
+                {
+                    double val = Math.Min(500, 0.1 * NominalValue);
+                    return Math.Max(30, val);
+                }
+               
+            }
+            return 0;
+        }
         public double CalculateAdditionalCostInAccordance()
         {
             if (NominalValue < 2000)

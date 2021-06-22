@@ -98,3 +98,4 @@ C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Debug\net5.0\ref\Project.
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Debug\net5.0\Project.pdb
 C:\Users\USER\Desktop\Work\Project\Project\Project\obj\Debug\net5.0\Project.genruntimeconfig.cache
 C:\Users\USER\Desktop\Work\Project\Project\Project\bin\Debug\net5.0\Json.Net.dll
+C:\Users\USER\Desktop\Work\Project\Project\Project\bin\Debug\net5.0\RestSharp.dll

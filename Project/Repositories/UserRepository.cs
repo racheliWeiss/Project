@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.SqlServer.Management.Sdk.Sfc.OrderBy;
 
 namespace Project.Repositories
 {
@@ -38,8 +39,10 @@ namespace Project.Repositories
         }
 
         private UserRepository()
-        {
-            connection = @"server= Data Source=82.166.177.109;User Id=cpiLogin;Password=!qazXsw2";
+        {// "Data Source=82.166.177.109;Initial Catalog=MSB;User Id=ReactLogin;Password=!qazXsw2"
+
+            connection = "Data Source=82.166.177.109;Initial Catalog=MSB;User ID=ReactLogin;Password=!qazXsw2;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
         }
         //check if the user existing  in server
  
@@ -65,8 +68,103 @@ namespace Project.Repositories
 
                         cmd.CommandText = "usp_login";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@login",model));
-                        retunRole=(int)cmd.ExecuteScalar();
+                        cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@login",
+                            SqlDbType = SqlDbType.NVarChar,
+                            Direction = ParameterDirection.InputOutput,
+                            Value = jsonUser
+                        });
+                       cmd.ExecuteScalar();
+                        var entity = cmd.Parameters["@login"];
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+            finally
+            {
+                if (conn != null && conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+
+            }
+            return retunRole;
+
+        }
+
+        public int Search(Object model)
+        {
+            int retunRole = -1;
+            SqlConnection conn = null;
+
+            string jsonUser = JsonConvert.SerializeObject(model);
+
+
+            //string jsonUser = JsonConvert.SerializeObject(testUser);‏
+
+            try
+            {
+                using (conn = new SqlConnection(connection))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+
+
+                        conn.Open();
+
+                        cmd.CommandText = "usp_entity_search";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@search", model));
+                        retunRole = (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+            finally
+            {
+                if (conn != null && conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+
+            }
+            return retunRole;
+
+        }
+
+
+        public int UspEntity(Object model)
+        {
+            int retunRole = -1;
+            SqlConnection conn = null;
+
+            string jsonUser = JsonConvert.SerializeObject(model);
+
+
+            //string jsonUser = JsonConvert.SerializeObject(testUser);‏
+
+            try
+            {
+                using (conn = new SqlConnection(connection))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+
+
+                        conn.Open();
+
+                        cmd.CommandText = "usp_entity";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@entity", model));
+                        retunRole = (int)cmd.ExecuteScalar();
                     }
                 }
             }
