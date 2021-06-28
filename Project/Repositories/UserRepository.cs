@@ -197,6 +197,51 @@ namespace Project.Repositories
             return jsonResult;
 
         }
+
+        public async Task<string> UspEnum(EntityEnum entity)
+        {
+            string jsonResult = "";
+            SqlConnection conn = null;
+            string jsonEntity = JsonConvert.SerializeObject(entity);
+            Console.WriteLine(entity);
+            try
+            {
+                using (conn = new SqlConnection(connection))
+                {
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "usp_enum";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@enum",
+                            SqlDbType = SqlDbType.NVarChar,
+                            Direction = ParameterDirection.InputOutput,
+                            Value = jsonEntity,
+                            Size = 8000,
+                        });
+                        cmd.ExecuteNonQuery();
+                        var login = cmd.Parameters["@enum"];
+                        jsonResult = cmd.Parameters["@enum"].Value.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+            finally
+            {
+                if (conn != null && conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+
+            }
+            return jsonResult;
+
+        }
     }
 
 

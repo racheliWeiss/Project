@@ -28,11 +28,16 @@ namespace Project.Manager
             return await UserRepository.Instance.UspEntity(model);
         }
 
+        //paginate in table 
         public static  string EntitySearch(EntitySearch model)
         {
             return UserRepository.Instance.Search(model);
         }
 
+        public static async Task<string> UspEnum(EntityEnum model)
+        {
+            return await UserRepository.Instance.UspEnum(model);
+        }
 
 
 
@@ -51,7 +56,7 @@ namespace Project.Manager
 
             if (response.StatusCode==HttpStatusCode.OK)
             {
-                //the take string with tag html andmodivy to stringwithouttag
+                //the take string with tag html and modify to string without tag
               string noHTML = Regex.Replace(response.Content, @"<[^>]+>|&nbsp;", "").Trim();
                 string noHTMLNormalised = Regex.Replace(noHTML, @"\s{2,}", " ");
                 postalCode = noHTMLNormalised;

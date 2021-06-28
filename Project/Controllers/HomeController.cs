@@ -46,7 +46,7 @@ namespace Project.Controllers
 
         [Route("uspEntity")]
         [HttpPost]
-        public async Task <ActionResult<dynamic>> UspEntity([FromBody] EntityRequst model)
+        public async Task <ActionResult<dynamic>> UspEntity( EntityRequst model)
         {
             string jsonResponse = await Manager.Manager.UspEntity(model);
             return jsonResponse;
@@ -63,40 +63,48 @@ namespace Project.Controllers
             return jsonSearch;
         }
 
-
         [HttpPost]
-        [Route("si")]
-        public JObject PostAlbumJObject(JObject jAlbum)
+        [Route("listOfValue")]
+        public async Task<ActionResult<dynamic>> uspEnum([FromBody] EntityEnum model)
         {
-            // dynamic input from inbound JSON
-            dynamic album = jAlbum;
+            string  jsonOfValue= await Manager.Manager.UspEnum(model);
+            return jsonOfValue;
 
-            // create a new JSON object to write out
-            dynamic newAlbum = new JObject();
-
-            // Create properties on the new instance
-            // with values from the first
-            newAlbum.AlbumName = album.AlbumName + " New";
-            newAlbum.NewProperty = "something new";
-            newAlbum.Songs = new JArray();
-
-            foreach (dynamic song in album.Songs)
-            {
-                song.SongName = song.SongName + " New";
-                newAlbum.Songs.Add(song);
-            }
-
-            return newAlbum;
         }
 
-        [HttpPost]
-        [Route("sihi")]
-        public Task<dynamic>FundAllocation(JObject jsonResult)
-        {
-            
-           dynamic item = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
-            return item;
-        }
+        //[HttpPost]
+        //[Route("si")]
+        //public JObject PostAlbumJObject(JObject jAlbum)
+        //{
+        //    // dynamic input from inbound JSON
+        //    dynamic album = jAlbum;
+
+        //    // create a new JSON object to write out
+        //    dynamic newAlbum = new JObject();
+
+        //    // Create properties on the new instance
+        //    // with values from the first
+        //    newAlbum.AlbumName = album.AlbumName + " New";
+        //    newAlbum.NewProperty = "something new";
+        //    newAlbum.Songs = new JArray();
+
+        //    foreach (dynamic song in album.Songs)
+        //    {
+        //        song.SongName = song.SongName + " New";
+        //        newAlbum.Songs.Add(song);
+        //    }
+
+        //    return newAlbum;
+        //}
+
+        //[HttpPost]
+        //[Route("sihi")]
+        //public Task<dynamic>FundAllocation(JObject jsonResult)
+        //{
+
+        //   dynamic item = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
+        //    return item;
+        //}
     }
 
 }

@@ -63,6 +63,37 @@ namespace Project.Models
         public string user_language { get; set; }
 
         public string user_time_zone { get; set; }
+        public int id_entity { get; set; }
+
+        public string attribute_request_method { get; set; }
+        public string attribute { get; set; }
+
+        public int address_type_id { get; set; }
+
+        public string address_name { get; set; }
+
+        public string address_number { get; set; }
+
+        public string address_city { get; set; }
+
+        public string address_country_code { get; set; }
+
+        public string address_zip_code { get; set; }
+        public int is_deleted { get; set; }
+        public int is_default { get; set; }
+
+        public int email_type_id { get; set; }
+
+        public string email_address { get; set; }
+
+        public string telephone_number { get; set; }
+
+        public string telephone_country_code { get; set; }
+
+        
+      
+      
+
     }
 }
 
