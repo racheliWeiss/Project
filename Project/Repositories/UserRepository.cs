@@ -1,11 +1,14 @@
 ﻿using Microsoft.SqlServer.Management.Smo;
 using Nancy.Json;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Dynamic;
+
 using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.SqlServer.Management.Sdk.Sfc.OrderBy;
@@ -14,7 +17,7 @@ namespace Project.Repositories
 {
     public class UserRepository
     {
-       
+
 
         private static UserRepository instance = new UserRepository();
         private static readonly object mutex = new object();
@@ -29,7 +32,7 @@ namespace Project.Repositories
                     {
                         if (instance == null)
                         {
-                            instance = new ();
+                            instance = new();
                         }
 
                     }
@@ -39,88 +42,96 @@ namespace Project.Repositories
         }
 
         private UserRepository()
-        {// "Data Source=82.166.177.109;Initial Catalog=MSB;User Id=ReactLogin;Password=!qazXsw2"
+        {// "Data Source=82.166.177.109;Initial Catalog=MSB;User Id=ReactLogin;Password="
 
-            connection = "Data Source=82.166.177.109;Initial Catalog=MSB;User ID=ReactLogin;Password=!qazXsw2;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            connection = "Data Source=82.166.177.109;Initial Catalog=MSB;User ID=ReactLogin;Password=!qazXsw2;" +
+                "Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         }
         //check if the user existing  in server
- 
-        public int Login(Models.User model)
+        public async Task<string> Login(Models.User model)
         {
-            int retunRole = -1;
+            string jsonLogin = "";
             SqlConnection conn = null;
-
             string jsonUser = JsonConvert.SerializeObject(model);
-
-
-            //string jsonUser = JsonConvert.SerializeObject(testUser);‏
-
             try
             {
                 using (conn = new SqlConnection(connection))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (SqlCommand cmd = conn.CreateCommand())
                     {
 
-
-                        conn.Open();
-
+                        await conn.OpenAsync();
+                        //conn.Open();
                         cmd.CommandText = "usp_login";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter
                         {
                             ParameterName = "@login",
-                            SqlDbType = SqlDbType.NVarChar,
+                            SqlDbType = SqlDbType.VarChar,
                             Direction = ParameterDirection.InputOutput,
-                            Value = jsonUser
+                            Value = jsonUser,
+                            Size = 8000
                         });
-                       cmd.ExecuteScalar();
-                        var entity = cmd.Parameters["@login"];
-
+                        //cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
+                        var login = cmd.Parameters["@login"];
+                        jsonLogin = cmd.Parameters["@login"].Value.ToString();
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 string error = ex.Message;
+                return $"Data could not be read [{ex}]";
+
             }
+            catch (Exception ex)
+            {
+                return $"error [{ex}]";
+
+            }
+
             finally
             {
                 if (conn != null && conn.State == ConnectionState.Open)
                 {
                     conn.Close();
                 }
-
             }
-            return retunRole;
-
+            return jsonLogin;
         }
 
-        public int Search(Object model)
+
+
+
+        public  string Search(EntitySearch model)
         {
-            int retunRole = -1;
             SqlConnection conn = null;
-
             string jsonUser = JsonConvert.SerializeObject(model);
-
-
-            //string jsonUser = JsonConvert.SerializeObject(testUser);‏
-
+            string jsonSearch = "";
             try
             {
                 using (conn = new SqlConnection(connection))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (SqlCommand cmd = conn.CreateCommand())
                     {
 
 
                         conn.Open();
-
                         cmd.CommandText = "usp_entity_search";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@search", model));
-                        retunRole = (int)cmd.ExecuteScalar();
+                        cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@search",
+                            SqlDbType = SqlDbType.VarChar,
+                            Direction = ParameterDirection.InputOutput,
+                            Value = jsonUser,
+                            Size = 8000
+                        });
+                        cmd.ExecuteNonQuery();
+                        var login = cmd.Parameters["@search"];
+                        jsonSearch = cmd.Parameters["@search"].Value.ToString();
                     }
                 }
             }
@@ -136,35 +147,38 @@ namespace Project.Repositories
                 }
 
             }
-            return retunRole;
+            return jsonSearch;
 
         }
 
 
-        public int UspEntity(Object model)
+        public async Task<string> UspEntity(EntityRequst entity)
         {
-            int retunRole = -1;
+
+            string jsonResult = "";
             SqlConnection conn = null;
-
-            string jsonUser = JsonConvert.SerializeObject(model);
-
-
-            //string jsonUser = JsonConvert.SerializeObject(testUser);‏
-
+            string jsonEntity = JsonConvert.SerializeObject(entity);
+            Console.WriteLine(entity);
             try
             {
                 using (conn = new SqlConnection(connection))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (SqlCommand cmd = conn.CreateCommand())
                     {
-
-
                         conn.Open();
-
                         cmd.CommandText = "usp_entity";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@entity", model));
-                        retunRole = (int)cmd.ExecuteScalar();
+                        cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@entity",
+                             SqlDbType = SqlDbType.NVarChar,
+                            Direction = ParameterDirection.InputOutput,
+                            Value = jsonEntity,
+                            Size = 8000,
+                        }) ;
+                        cmd.ExecuteNonQuery();
+                        var login = cmd.Parameters["@entity"];
+                        jsonResult = cmd.Parameters["@entity"].Value.ToString();
                     }
                 }
             }
@@ -180,7 +194,7 @@ namespace Project.Repositories
                 }
 
             }
-            return retunRole;
+            return jsonResult;
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using Newtonsoft.Json.Linq;
+using Project.Models;
 using Project.Repositories;
 using RestSharp;
 using System;
@@ -15,11 +16,27 @@ namespace Project.Manager
 {
     public class Manager
     {
-        public static int Login(User model)
+        //get the login user
+        public static async Task<string> Login(User model)
         {
-            return UserRepository.Instance.Login(model);
+            return await UserRepository.Instance.Login(model);
         }
 
+        //entity for update delete and..
+        public static async Task<string> UspEntity(EntityRequst model)
+        {
+            return await UserRepository.Instance.UspEntity(model);
+        }
+
+        public static  string EntitySearch(EntitySearch model)
+        {
+            return UserRepository.Instance.Search(model);
+        }
+
+
+
+
+        //api to post israel to recive the postalCode of address
         public static string PostCode(Address obj)
         {
 
@@ -34,16 +51,18 @@ namespace Project.Manager
 
             if (response.StatusCode==HttpStatusCode.OK)
             {
+                //the take string with tag html andmodivy to stringwithouttag
               string noHTML = Regex.Replace(response.Content, @"<[^>]+>|&nbsp;", "").Trim();
                 string noHTMLNormalised = Regex.Replace(noHTML, @"\s{2,}", " ");
                 postalCode = noHTMLNormalised;
-                postalCode=postalCode.Substring(3);
+                postalCode=postalCode.Substring(4);
+                postalCode = postalCode.Substring(0,7);
             }
             return postalCode;
         }
 
        
-
+        //map parmter to url
         public static string GetQueryString(object obj)
         {
             var properties = from p in obj.GetType().GetProperties()

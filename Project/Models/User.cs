@@ -14,13 +14,18 @@ namespace Project.Models
 
         public string login_finger_print { get; set; }
 
-        public User()
-        { }
-         public User(string Username,string Password)
-        {
-            this.login_password = Password;
-            this.login_ID = Username;
-        }
+        public string login_request_method{ get; set; }
+
+        public string ip { get; set; }
+
+
+        //public User()
+        //{ }
+        // public User(string Username,string Password)
+        //{
+        //    this.login_password = Password;
+        //    this.login_ID = Username;
+        //}
 
     }
 }
