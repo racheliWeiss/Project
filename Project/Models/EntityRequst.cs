@@ -55,7 +55,7 @@ namespace Project.Models
         public Boolean is_locked { get; set; }
 
         public string note { get; set; }
-
+        //check parm
         public int permission_group_id { get; set; }
 
         public Boolean return_entity { get; set; }

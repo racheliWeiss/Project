@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Project.Models;
-using Project.Repositories;
 using Project.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Project.Controllers
@@ -23,11 +20,16 @@ namespace Project.Controllers
          //The function Login to server with jwt 
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
+          try
+          {
+
+        
             string jsonLogin = await Manager.Manager.Login(model);
             var jsonResponse =  JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonLogin);
             string permission =  jsonResponse["err_code"];
-            if (permission.Equals( "2"))
-                return  NotFound(new { message = "User or password invalid" });
+             if (!permission.Equals("0"))
+                  return "dont login";
+                 //NotFound(new { message = "User or password invalid" });
 
             if (permission.Equals("0") ){ 
           
@@ -36,17 +38,22 @@ namespace Project.Controllers
                return new
                {
                  user= jsonLogin,
-                token = token
+                 token = token
                };
 
             }
+          }
+          catch(Exception ex)
+           {
+               return (ex.ToString());
+           }
 
             return "dont login";
         }
 
         [Route("uspEntity")]
         [HttpPost]
-        public async Task <ActionResult<dynamic>> UspEntity( EntityRequst model)
+        public async Task <ActionResult<dynamic>> UspEntity([FromBody] EntityRequst model)
         {
             string jsonResponse = await Manager.Manager.UspEntity(model);
             return jsonResponse;
@@ -64,7 +71,7 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        [Route("listOfValue")]
+        [Route("uspEnum")]
         public async Task<ActionResult<dynamic>> uspEnum([FromBody] EntityEnum model)
         {
             string  jsonOfValue= await Manager.Manager.UspEnum(model);
