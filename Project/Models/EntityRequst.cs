@@ -20,7 +20,7 @@ namespace Project.Models
 
         public string ID_number { get; set; }
 
-        public int ID_type_id { get; set; }
+        public string ID_type_id { get; set; }
 
         public int status_id { get; set; }
 
@@ -44,7 +44,7 @@ namespace Project.Models
 
         public DateTime date_birth { get; set; }
 
-        public int gender_id { get; set; }
+        public string gender_id { get; set; }
 
         public int id_identifier { get; set; }
 

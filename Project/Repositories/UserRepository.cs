@@ -53,6 +53,7 @@ namespace Project.Repositories
         {
             string jsonLogin = "";
             SqlConnection conn = null;
+
             string jsonUser = JsonConvert.SerializeObject(model);
             try
             {
@@ -124,10 +125,10 @@ namespace Project.Repositories
                         cmd.Parameters.Add(new SqlParameter
                         {
                             ParameterName = "@search",
-                            SqlDbType = SqlDbType.VarChar,
+                            SqlDbType = SqlDbType.NVarChar,
                             Direction = ParameterDirection.InputOutput,
                             Value = jsonUser,
-                            Size = 8000
+                            Size = 15000
                         });
                         cmd.ExecuteNonQuery();
                         var login = cmd.Parameters["@search"];

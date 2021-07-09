@@ -13,20 +13,23 @@ namespace Project.Models
 
         // private string[] myNumbers= { ["name","address","thelephone"]};
 
-        private string[] search_field = { "name", "address", "thelephone" };
-        public string[] search_fields
-        {
-            get { return search_field; }
-            set { search_field = value; }
-        }
+        //private string[] search_field = { "name", "address", "thelephone" };
+        //public string[] search_fields
+        //{
+        //    get { return search_field; }
+        //    set { search_field = value; }
+        //}
+
+        public string[] search_field { get; set; }
+
+
         public string search_type { get; set; }
 
-        private string[] search_types_id = { "customer", "user" };
-        public string[] search_entity_type_id
-        {
-            get { return search_types_id; }
-            set { search_types_id = value; }
-        }
+        public string[] search_types_id { get; set; }
+
+        //private string[] search_types_id = { "customer", "user" };
+     
+        public string[] search_entity_type_id { get; set; }
         public string order_by { get; set; }
         public int page_size { get; set; }
 

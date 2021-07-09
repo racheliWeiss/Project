@@ -17,22 +17,18 @@ namespace Project.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-         //The function Login to server with jwt 
+        //The function Login to server with jwt 
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
           try
           {
-
-        
             string jsonLogin = await Manager.Manager.Login(model);
             var jsonResponse =  JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonLogin);
             string permission =  jsonResponse["err_code"];
              if (!permission.Equals("0"))
                   return "dont login";
                  //NotFound(new { message = "User or password invalid" });
-
             if (permission.Equals("0") ){ 
-          
                var token = TokenService.CreateToken(model);
                model.login_password = "";
                return new
@@ -40,14 +36,12 @@ namespace Project.Controllers
                  user= jsonLogin,
                  token = token
                };
-
             }
           }
-          catch(Exception ex)
+          catch(JsonReaderException ex)
            {
                return (ex.ToString());
            }
-
             return "dont login";
         }
 
@@ -72,6 +66,7 @@ namespace Project.Controllers
 
         [HttpPost]
         [Route("uspEnum")]
+        [AllowAnonymous]
         public async Task<ActionResult<dynamic>> uspEnum([FromBody] EntityEnum model)
         {
             string  jsonOfValue= await Manager.Manager.UspEnum(model);
