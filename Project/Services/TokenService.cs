@@ -24,7 +24,7 @@ namespace Project.Services
                 {
                     new Claim(ClaimTypes.Name, user.login_ID.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddHours(EXPIRE_HOURS),
+                Expires = DateTime.UtcNow.AddMinutes(EXPIRE_HOURS),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(descriptor);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Project.Models;
 using Project.Services;
 using System;
@@ -27,16 +28,21 @@ namespace Project.Controllers
             string permission =  jsonResponse["err_code"];
              if (!permission.Equals("0"))
                   return "dont login";
-                 //NotFound(new { message = "User or password invalid" });
-            if (permission.Equals("0") ){ 
-               var token = TokenService.CreateToken(model);
-               model.login_password = "";
-               return new
-               {
-                 user= jsonLogin,
-                 token = token
-               };
-            }
+                //NotFound(new { message = "User or password invalid" });
+                if (permission.Equals("0")) {
+                    var tokenResult = TokenService.CreateToken(model);
+                    JObject user = JObject.Parse(jsonLogin);
+                    string tokenR = JsonConvert.SerializeObject(new { token = tokenResult });
+                    JObject token = JObject.Parse(tokenR);
+                    user.Merge(token, new JsonMergeSettings
+                    {
+                        // union array values together to avoid duplicates
+                        MergeArrayHandling = MergeArrayHandling.Union
+                    });
+                    return user.ToString();
+                  
+                };
+            
           }
           catch(JsonReaderException ex)
            {

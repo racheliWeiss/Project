@@ -35,8 +35,8 @@ namespace Project
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:3000", "http://localhost:3001", "http://82.166.177.79/FinApi", "https://82.166.177.79/FinApi",
-                                                          "http://82.166.177.79", "https://82.166.177.79").AllowAnyHeader()
+                                      builder.WithOrigins("http://localhost:3000", "http://localhost:3002", "http://localhost:3001", "http://82.166.177.79/FinApi",
+                                                          "http://82.166.177.79").AllowAnyHeader()
                                                   .AllowAnyMethod(); 
                                   });
             });
@@ -78,7 +78,10 @@ namespace Project
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("v1/swagger.json", "MyAPI V1");
+                });
             }
 
             app.UseHttpsRedirection();
